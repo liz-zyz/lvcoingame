@@ -173,3 +173,23 @@ body {
 .button:active {
   transform: scale(0.95);
 }
+/* ハイスコア表示 - シンプルに数値のみ */
+.highscore-display {
+  position: absolute;
+  left: 1360px;
+  top: 139px;
+  width: 100px;
+  margin-left: -50px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.highscore-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  text-align: center;
+}
