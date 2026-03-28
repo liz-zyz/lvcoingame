@@ -1,0 +1,43 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>LV COIN GAME</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Matter.js ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <!-- スタイルシート -->
+    <link rel="stylesheet" type="text/css" href="./index.css" media="screen" />
+  </head>
+
+  <body>
+    <div class="main">
+      <!-- 背景レイヤー -->
+      <div class="bg-layer-main"></div>
+
+      <!-- ゲームエリア -->
+      <div class="game-wrapper">
+        <div class="bg-layer"></div>
+        <div class="container"></div>
+        <div class="front-layer"></div>
+      </div>
+
+      <!-- UIエリア -->
+      <div class="ui-container">
+        <div class="score-display">
+          <p class="score-value">0</p>
+        </div>
+        <div class="next-coin-display">
+          <img id="nextCoinImage" src="" alt="Next Coin">
+        </div>
+        <div class="message"></div>
+      </div>
+    </div>
+
+    <!-- メインロジック -->
+    <script src="./main.js"></script>
+  </body>
+</html>

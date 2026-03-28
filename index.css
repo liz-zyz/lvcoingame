@@ -1,0 +1,175 @@
+/* index.css */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: auto; /* autoに変更 */
+  background-color: #000;
+  min-width: 1600px;
+  min-height: 900px;
+}
+
+.main {
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  margin: 0 auto; /* 中央配置 */
+  background-color: #000;
+}
+
+/* 以下は変更なし */
+.bg-layer-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1600px;
+  height: 900px;
+  background-image: url('./LvCoin_bg.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.game-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 688px;
+  height: 785px;
+  z-index: 1;
+}
+
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 688px;
+  height: 785px;
+  background-image: url('./LvCoinGame.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 688px;
+  height: 785px;
+  z-index: 2;
+  cursor: crosshair;
+}
+
+.container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.front-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 688px;
+  height: 785px;
+  background-image: url('./LvCoinGame_front.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.ui-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1600px;
+  height: 900px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.score-display {
+  position: absolute;
+  left: 74px;
+  top: 155px;
+  width: 324px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.score-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+  margin: 0;
+  text-align: center;
+}
+
+.next-coin-display {
+  position: absolute;
+  left: 74px;
+  top: 507px;
+  width: 321px;
+  height: 321px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.next-coin-display img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  text-align: center;
+  color: white;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 16px;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+.mainText {
+  font-size: 32px;
+  color: #ff0;
+  margin: 0 0 20px 0;
+  font-weight: bold;
+}
+
+.button {
+  width: 150px;
+  height: 40px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #ff0;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+}
+
+.button:hover {
+  background: #fffb00;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
