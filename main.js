@@ -63,12 +63,15 @@ class BubbeGame {
 
     this.runner = Runner.create();
     Render.run(this.render);
-  
+
     window.addEventListener("mousedown", (e) => this.handleClick(e));
     window.addEventListener("mousemove", (e) => this.handleMouseMove(e));
 
     Events.on(this.engine, "collisionStart", (e) => this.handleCollision(e));
     Events.on(this.engine, "afterUpdate", () => this.checkGameOver());
+
+    // ハイスコアの読み込み
+    this.loadHighScore();
   }
 
   getRadiusByLevel(level) {
@@ -80,6 +83,29 @@ class BubbeGame {
     if (nextCoinImg) {
       nextCoinImg.src = BUBBLE_IMAGES[level];
       nextCoinImg.style.display = "block";
+    }
+  }
+
+  loadHighScore() {
+    const saved = localStorage.getItem('lvcoin_highscore');
+    this.highScore = saved ? parseInt(saved) : 0;
+    this.updateHighScoreDisplay();
+  }
+
+  saveHighScore(score) {
+    if (score > this.highScore) {
+      this.highScore = score;
+      localStorage.setItem('lvcoin_highscore', score);
+      this.updateHighScoreDisplay();
+      return true;
+    }
+    return false;
+  }
+
+  updateHighScoreDisplay() {
+    const highscoreElement = document.querySelector(".highscore-value");
+    if (highscoreElement) {
+      highscoreElement.textContent = this.highScore;
     }
   }
 
@@ -330,6 +356,9 @@ class BubbeGame {
     if (scoreValue) {
       scoreValue.textContent = score;
     }
+
+    // ハイスコア更新
+    this.saveHighScore(score);
   }
 
   showReadyMessage() {
