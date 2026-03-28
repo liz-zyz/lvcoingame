@@ -63,9 +63,10 @@ class BubbeGame {
 
     this.runner = Runner.create();
     Render.run(this.render);
+  
+    window.addEventListener("mousedown", (e) => this.handleClick(e));
+    window.addEventListener("mousemove", (e) => this.handleMouseMove(e));
 
-    container.addEventListener("mousedown", (e) => this.handleClick(e));
-    container.addEventListener("mousemove", (e) => this.handleMouseMove(e));
     Events.on(this.engine, "collisionStart", (e) => this.handleCollision(e));
     Events.on(this.engine, "afterUpdate", () => this.checkGameOver());
   }
@@ -235,10 +236,32 @@ class BubbeGame {
     );
 
     for (const bubble of bubbles) {
-      if (bubble.position.y < DEADLINE_Y && Math.abs(bubble.velocity.y) < 0.2) {
-        this.gameover = true;
-        this.showGameOverMessage();
-        break;
+      // デッドラインより上にある場合
+      if (bubble.position.y < DEADLINE_Y) {
+        // 静止時間を計測するプロパティがなければ初期化
+        if (bubble.staticTimer === undefined) {
+          bubble.staticTimer = 0;
+        }
+
+        // 速度が十分に小さいか判定（X方向とY方向の両方をチェック）
+        const isNearlyStatic = Math.abs(bubble.velocity.y) < 0.2 && Math.abs(bubble.velocity.x) < 0.2;
+
+        if (isNearlyStatic) {
+          bubble.staticTimer++;
+        } else {
+          bubble.staticTimer = 0;
+        }
+
+        if (bubble.staticTimer > 60) {
+          this.gameover = true;
+          this.showGameOverMessage();
+          break;
+        }
+      } else {
+        // デッドラインより下の場合はタイマーリセット
+        if (bubble.staticTimer !== undefined) {
+          bubble.staticTimer = 0;
+        }
       }
     }
   }
@@ -264,6 +287,28 @@ class BubbeGame {
 
   handleClick(e) {
     if (this.gameover || this.gameStatus !== "canput") return;
+
+    // クリックされた座標を取得
+    const rect = this.render.canvas.getBoundingClientRect();
+    let clickX = e.clientX - rect.left;
+
+    // クリック位置がゲームエリアの範囲外の場合、範囲内に補正
+    const level = Number(this.currentBubble.label.substring(7));
+    const radius = this.getRadiusByLevel(level);
+    const minX = OFFSET_X + radius;
+    const maxX = OFFSET_X + GAME_WIDTH - radius;
+
+    // クリック位置を範囲内にクランプ
+    clickX = Math.max(Math.min(clickX, maxX), minX);
+
+    // 現在のコインの位置を更新
+    if (this.currentBubble) {
+      Body.setPosition(this.currentBubble, {
+        x: clickX,
+        y: this.currentBubble.position.y,
+      });
+      this.defaultX = clickX;
+    }
 
     this.putCurrentBubble();
     this.gameStatus = "interval";
